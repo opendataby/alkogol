@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+article, footer {
+    margin-left: 1em;
+    max-width: 1200px
+}
+
+#tooltip {
+  position: absolute;
+  width: 150px;
+  height: auto;
+  padding: 5px;
+  background-color: white;
+  pointer-events: none;
+  border: 1px solid black;
+}
+#tooltip.hidden {
+  display: none;
+}
+#tooltip p {
+  margin: 0;
+  font-size: 10px;
+  
+}
+
+#logo > a {
+    display: block;
+    background-color: #2A2F4E;
+    margin: 0 auto;
+    padding: 0.5em 0;
+}
+
+#mapTiems, #impressum {
+    clear: both;
+}
+
+.text, #disqus_thread {
+  display: block;
+}
+#slider line {
+  fill: green;
+  stroke: green;
+  stroke-width: 2px;
+  opacity: .9;
+}
+
+.city {
+   opacity: .9;
+}
+
+#slider circle {
+  fill: red;
+  stroke-width: 2px;
+  cursor: pointer;
+  
+}
+
+#list, #map {
+  display: inline;
+  float: left;
+}
+
+#list {
+  width: 200px;
+}
+#map {
+  width: 1000px;
+}
+
+#map path {
+  stroke: black;
+  opacity: .8;
+}
