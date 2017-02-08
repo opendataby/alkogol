@@ -5,7 +5,7 @@ var width = 1000,
 var today = new Date();
 var selection = [];
 var timeScale = d3.time.scale()
-                .domain([new Date("2016-01-01"), new Date("2016-12-31")])
+                .domain([new Date("2017-01-01"), new Date("2017-12-31")])
                 .rangeRound([25, 1175])
                 .nice(d3.time.day);
 
