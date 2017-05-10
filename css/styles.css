@@ -1,3 +1,118 @@
+#logo {
+  background-color: #2A2F4F;
+  margin-bottom: 1em;
+  padding: 0.2em 0;
+}
+
+/* Главное меню категорий */
+#categories li {
+  list-style: none;
+  display: inline;
+  margin-right: .5em;
+  font-size: 20px;
+  background-color: #2A2F4E;
+  color: white;
+  padding: .3em .5em;
+}
+
+#categories li:hover {
+	cursor: pointer;
+}
+
+#categories ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+#categories {
+  margin-bottom: 1.5em;
+  margin-top: 2em;
+}
+
+#categories .active {
+  background-color: #DF5757;
+}
+
+/* Селекторы регионов и показателей для графика и карты предпросмотра */ 
+#grafik select {
+  	font-size: 1em;
+	background-color: white;
+	padding: .2em;
+}
+
+#indicators {
+  min-width: 30%;
+}
+
+
+
+/* Содержимое графика */
+#grafik .graph_circle {
+  fill: white;
+  stroke: black;
+  stroke-width: 2px;
+}
+
+.graph_circle:hover {
+  cursor: crosshair;
+}
+
+svg, #grafik {
+  margin-top: 1em;
+}
+
+.area_graph {
+  fill: #78C679;
+}
+
+#slider_handle {
+  fill: #DF5757;
+}
+#slider_handle:hover {
+	cursor: pointer;
+}
+
+#slider {
+	stroke: black;
+	stroke-width: 2;
+}
+
+
+
+.line_graph {
+	fill: none;
+	stroke: #2A2F4E;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+	stroke-width: 2
+}
+
+tbody tr:hover {
+	background-color: lightgrey; 
+}
+
+#preview tooltip {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 5px;
+  background-color: white;
+  pointer-events: none;
+  border: 1px solid black;
+}
+#preview_tooltip.hidden {
+  display: none;
+}
+
+#preview_tooltip p {
+  margin: 0;
+  font-size: 10px;
+  color: black;
+  padding: .3em;
+}
+
+
+/* Старый код
 body {
   margin: 0;
   font-size: 14px;
@@ -27,10 +142,10 @@ article, footer {
   
 }
 
-#logo > a {
+#logo {
     display: block;
     background-color: #2A2F4E;
-    margin: 0 auto;
+    margin-bottom: 1em;
     padding: 0.5em 0;
 }
 
@@ -75,3 +190,5 @@ article, footer {
   stroke: black;
   opacity: .8;
 }
+
+*/
