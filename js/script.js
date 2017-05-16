@@ -630,18 +630,6 @@ var main_map = svg_map.selectAll("path")
             .enter()
 			.append("path")
 			.attr("d", path)
-			//.attr("fill", function(d) {
-        //var color = "green";
-        //for (var q = 0; q < selection.length; q++) {
-                    //if (d.properties.rajon == selection[q].district) {
-                        //color = "red";
-                        //d.properties.period = selection[q].period;
-                    //} else {
-                        //continue;
-                    //};
-                //};
-                //return color;
-            //})
             .on("mouseover", function(d) {
                 var xPos = d3.event.pageX + "px";
                 var yPos = d3.event.pageY + "px";
@@ -681,20 +669,6 @@ var main_map = svg_map.selectAll("path")
                        } else {
                          return 6;
                        };})
-                     //.attr("fill", function(d) { 
-                              //var color = "green";
-                              //for (var q = 0; q < selection.length; q++) {
-                                //if (d.city == selection[q].district) {
-                                    //color = "red";
-                                    //d.period = selection[q].period
-                                  //} else {
-                                    //continue;
-                                //};
-                              //};
-                              //return color;
-                              //})               
-                     //.style("stroke", "white")
-                     //.style("stroke-width", "2px")
                 .on("mouseover", function(d) {
                   var xPos = d3.event.pageX + "px";
                   var yPos = d3.event.pageY + "px";
@@ -717,22 +691,15 @@ var main_map = svg_map.selectAll("path")
                       .classed("hidden", true)
                     });
 
-
-
-
-
-
-
-
     // Сбор данных об ограничениях на заданную дату
 function selectData(value) {
 	selection = [];
     data.forEach(function(d) {
 	var newData = new Date(d.date);
-	newData.toDateString() == value.toDateString() ? selection.push(d) : void 0;
-			//if (newData.toDateString() == value.toDateString()) {
-					//selection.push(d);
-                //};
+	//newData.toDateString() == value.toDateString() ? selection.push(d) : void 0;
+			if (newData.toDateString() == value.toDateString()) {
+					selection.push(d);
+                };
 	});
     return selection;
 }
