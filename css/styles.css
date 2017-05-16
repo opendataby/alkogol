@@ -62,7 +62,8 @@ svg, #grafik {
 }
 
 .area_graph {
-  fill: #78C679;
+  fill: #CBC9E2;
+  opacity: .6;
 }
 
 #slider_handle {
@@ -111,6 +112,14 @@ tbody tr:hover {
   padding: .3em;
 }
 
+#main_map path {
+  stroke-width: 1px;
+  stroke: black;
+  opacity: .8;
+}
+
+
+
 
 /* Старый код
 body {
@@ -156,13 +165,20 @@ article, footer {
 .text, #disqus_thread {
   display: block;
 }
-#slider line {
+*/
+#main_slider line {
   fill: green;
   stroke: green;
   stroke-width: 2px;
   opacity: .9;
 }
 
+.city {
+  stroke: white;
+  stroke-width: .1em;
+}
+
+/*
 .city {
    opacity: .9;
 }

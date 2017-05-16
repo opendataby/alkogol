@@ -38,7 +38,7 @@ var grafik_indicator_selector = d3.select("#grafik")
 	});
 
 var preview_map_color = d3.scaleQuantize()
-              .range(['#ffffcc','#c2e699','#78c679','#238443']);
+              .range(['#f2f0f7','#cbc9e2','#9e9ac8','#6a51a3']);
 
 // Шкалы для графика
 var x_scale = d3.scaleBand()
@@ -80,8 +80,13 @@ function dragging() {
 	});
 }
 function dragended(d) {
-	var year_selected = x_scale.domain()[Math.round((d3.event.x) / x_scale.step() )];
-	d3.select(this).attr("cx", Math.round(x_scale(x_scale.domain()[Math.round((d3.event.x) / x_scale.step() )]) + x_scale.step() / 2));
+	var year_selected = x_scale.domain()[Math.round((d3.event.x) /
+		x_scale.step() )];
+	d3.select(this)
+		.attr("cx", Math.round(x_scale(x_scale.domain()
+			[Math.round((d3.event.x) / x_scale.step() )]) +
+				x_scale.step() / 2)
+		);
 	redraw_preview_map(year_selected, current_indicator)
 }
 
@@ -262,7 +267,6 @@ function draw_by_category(category) {
 
 }
 
-
 function redraw_graph(subject, indicator) {
 	// Список регионов собирается по индикатору.
 	var grafik_subject_selectors = Array.from(new Set(
@@ -345,8 +349,6 @@ function redraw_graph(subject, indicator) {
 		return d3.ascending(+a, +b);
 	});
 
-
-	//y_scale.domain([0, data_extent[1]]);
 	y_axis_group
 			.transition().duration(500)
 			.call(y_axis);
@@ -378,13 +380,13 @@ function redraw_graph(subject, indicator) {
 			d3.select("#general_tooltip")
 				.style("left", xPos)
 				.style("top", yPos)
-			  .classed("hidden", false);
+			    .classed("hidden", false);
 			d3.select("#datum")
 				.text(formatter(d.amt));
 				})
 		.on("mouseout", function(d) {
 			d3.select("#general_tooltip")
-				.classed("hidden", true)
+			    .classed("hidden", true)
 		})
 		.attr("cx", function(d) {
 				return x_scale(d.year) + 60 + x_scale.bandwidth() / 2;
@@ -420,7 +422,6 @@ function redraw_preview_map(year, indicator) {
 		var map_filtered_data = main_data["preview_data"].filter(function(d) {
 			return d.ind == indicator && d.year == year && d.sub != 375;
 		});
-console.log("map_filtered_data", map_filtered_data);
 	if (!lock_preview) {
 
 	// Фильтруем данные для карты
@@ -428,14 +429,12 @@ console.log("map_filtered_data", map_filtered_data);
 	var available_regions = map_filtered_data.map(function(d) {
 		return d.sub;
 	});
-console.log("available_regions", available_regions); 
 
 		preview_map_extent = d3.extent(map_filtered_data, function(d) {
 			//if (d.subject != "375") { // Можно обойтись без проверки
 			return +d.amt;
 			//}
 			});
-        console.log("preview_map_extent", preview_map_extent);
 
 		preview_map_color.domain([preview_map_extent[0], preview_map_extent[1]]);
 
@@ -484,7 +483,6 @@ console.log("available_regions", available_regions);
 			}
 			})
 	} else {
-// Обновить данные карты тоже надо
 
 	var current_datum = map_filtered_data.filter(function(d) {
 		return d.year == year && d.sub == lock_preview;
@@ -564,8 +562,6 @@ console.log("available_regions", available_regions);
 	}
 }
 
-
-
 // Основная карта
 var width = 1000,
   height = 150;
@@ -576,16 +572,15 @@ var timeScale = d3.scaleTime()
               .domain([new Date("2017-01-01"), new Date("2017-12-31")])
               .rangeRound([25, 1175])
               .nice(d3.timeDay);
-
 // Бегунок
 var main_slider_svg = d3.select("#main_slider")
         .append("svg")
         .attr("viewBox", "0 0 800 150")
-        .attr("width", 1200)
+        .attr("width", "100%")
         .attr("height", height);
   
 main_slider_svg.append("line")
-    .attr("x1", 25)
+    .attr("x1", 20)
     .attr("y1", height / 2)
     .attr("x2", 1175)
     .attr("y2", height / 2);
@@ -618,187 +613,39 @@ var svg_map = d3.select("#main_map")
     .attr("height", 500);
 
 function convertDate(d) {
-  var months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+  var months = ["января", "февраля", "марта", "апреля", "мая", "июня",
+	"июля", "августа", "сентября", "октября", "ноября", "декабря"];
   var month = d.getMonth();
   var date = d.getDate();
   return date + " " + months[month];
 }
 
-
 d3.csv("data/data.csv", function(error, data) {
   d3.json("data/rajony.geojson", function(json) {
         d3.csv("data/goroda.csv", function(goroda) {
 
-        function selectData(value) {
-              selection = [];
-              for (var i = 0; i < data.length; i++) {
-              var newData = new Date(data[i].date);
-                if (newData.toDateString() == value.toDateString()) {
-                  selection.push(data[i]);
-                }
-              };
-            return selection;
-          }
-                    
-      var header = d3.select("#list")
-                    .append("text");
 
-      var rajony = d3.select("#list").append("g")
-            .attr("class", "rajony")
-            .attr("transform", "translate(" + 20 + ", " + 20 + ")")
-            .append("ul");
-
-    function dragListener(d) {
-          var cx = +d3.select(this).attr("cx");
-                    
-      d3.select(this)
-                .attr("cx", function(d) {
-                    if (cx < 25) {
-                      return 25;
-                      } else if (cx > 1175) {
-                      return 1175;
-                    } else {
-                      return cx + d3.event.dx;
-                    }
-                  })
-
-      
-    var draggedDate = timeScale.invert(cx);
-	
-          
-          selectData(draggedDate);
-          
-          map.attr("fill", function(d) {
-                  var color = "green";
-                  d.properties.period = "";
-                  for (var q = 0; q < selection.length; q++) {
-                    if (d.properties.rajon == selection[q].district) {
-                        color = "red";
-                        d.properties.period = selection[q].period;
-                      } else {
-                        continue;
-                    };
-                  };
-                  return color;
-                  })
-          .on("mouseover", function(d) {
-                  var xPos = d3.event.pageX + "px";
-                  var yPos = d3.event.pageY + "px";
-                  d3.select("#main_tooltip")
-                    .style("left", xPos)
-                    .style("top", yPos)
-                    .classed("hidden", false);
-                  d3.select("#rajon")
-                    .text(d.properties.rajon + " район");
-                  if (d.properties.period != "") {
-                  d3.select("#period")
-                    .text("Продажа ограничена с " + d.properties.period);
-                  } else {
-                    d3.select("#period")
-                    .text("Обычный режим продажи.");
-                  };
-                  })
-                  .on("mouseout", function(d) {
-                    d3.select("#main_tooltip")
-                      .classed("hidden", true)
-                    });
-          
-          cities.attr("fill", function(d) {
-                    var color = "green";
-                    d.period = "";
-                    for (var b = 0; b < selection.length; b++) {
-                      if (d.city == selection[b].district) {
-                          color = "red";
-                          d.period = selection[b].period;
-                        } else {
-                          continue;
-                      };
-                    };
-                    return color;
-                    })
-                .on("mouseover", function(d) {
-                  var xPos = d3.event.pageX + "px";
-                  var yPos = d3.event.pageY + "px";
-                  d3.select("#main_tooltip")
-                    .style("left", xPos)
-                    .style("top", yPos)
-                    .classed("hidden", false);
-                  d3.select("#rajon")
-                    .text(d.city);
-                    
-                  if (d.period != "") {
-                  d3.select("#period")
-                    .text("Продажа ограничена с " + d.period);
-                  } else {
-                    d3.select("#period")
-                    .text("Обычный режим продажи.");
-                  };
-                  })
-                  .on("mouseout", function(d) {
-                    d3.select("#main_tooltip")
-                      .classed("hidden", true)
-                    });
-                    
-
-          main_slider_svg.select("text")
-            .text(convertDate(draggedDate))
-              .attr("x", timeScale(draggedDate) - 23);
-          
-          rajony.selectAll("li")
-              .remove()
-          
-              if (selection.length > 0) {
-            header.text("Продажа алкоголя ограничена в " + selection.length + " районах (городах):");
-          } else {
-            header.text("По всей республике действует обычный режим продажи.");
-          };
-          rajonyFiltered = selection.map(function(d) { return d.district; }).sort();
-          rajony.selectAll("li")
-             .data(rajonyFiltered)
-              .enter()
-              .append("li")
-              .text(function(d) { return d });
-        }
-        
-         //var drag = d3.behavior.drag()
-                      //.on("drag", dragListener);
-                  
-          selectData(today);
-          
-          if (selection.length > 0) {
-            header.text("Продажа алкоголя ограничена в " + selection.length + " районах (городах):");
-          } else {
-            header.text("По всей республике действует обычный режим продажи.");
-          };
-          rajonyFiltered = selection.map(function(d) { return d.district; }).sort();
-          rajony.selectAll("li")
-              .data(rajonyFiltered.sort())
-              .enter()
-              .append("li")
-              .text(function(d) { return d });
-
-          var map = svg_map.selectAll("path")
-              .data(json.features);
-              
-              map.enter()
-                .append("path")
-                .attr("d", path)
-                .attr("fill", function(d) {
-                    var color = "green";
-                    for (var q = 0; q < selection.length; q++) {
-                      if (d.properties.rajon == selection[q].district) {
-                          color = "red";
-                          d.properties.period = selection[q].period;
-                        } else {
-                          continue;
-                      };
-                    };
-                    return color;
-                    })
-                .on("mouseover", function(d) {
-                  var xPos = d3.event.pageX + "px";
-                  var yPos = d3.event.pageY + "px";
-                  d3.select("#main_tooltip")
+var main_map = svg_map.selectAll("path")
+            .data(json.features)
+            .enter()
+			.append("path")
+			.attr("d", path)
+			//.attr("fill", function(d) {
+        //var color = "green";
+        //for (var q = 0; q < selection.length; q++) {
+                    //if (d.properties.rajon == selection[q].district) {
+                        //color = "red";
+                        //d.properties.period = selection[q].period;
+                    //} else {
+                        //continue;
+                    //};
+                //};
+                //return color;
+            //})
+            .on("mouseover", function(d) {
+                var xPos = d3.event.pageX + "px";
+                var yPos = d3.event.pageY + "px";
+                d3.select("#main_tooltip")
                     .style("left", xPos)
                     .style("top", yPos)
                     .classed("hidden", false);
@@ -812,43 +659,42 @@ d3.csv("data/data.csv", function(error, data) {
                     .text("Обычный режим продажи.");
                   };
                   })
-                  .on("mouseout", function(d) {
+            .on("mouseout", function(d) {
                     d3.select("#main_tooltip")
                       .classed("hidden", true)
                     });
         
           var cities = svg_map.selectAll("circle")
-                        .data(goroda);
-                  
-                  cities.enter()
-                     .append("circle")
-                     .attr("class", "city")
-                     .attr("cx", function(d) {
+                        .data(goroda)
+                        .enter()
+						.append("circle")
+						.attr("class", "city")
+						.attr("cx", function(d) {
                         return projection([d.lon, d.lat])[0];
-                     })
-                     .attr("cy", function(d) {
+						})
+						.attr("cy", function(d) {
                        return projection([d.lon, d.lat])[1];
-                     })
-                     .attr("r", function(d) {
+						})
+						.attr("r", function(d) {
                        if (d.city == "Минск") {
                          return 8;
                        } else {
                          return 6;
                        };})
-                     .attr("fill", function(d) { 
-                              var color = "green";
-                              for (var q = 0; q < selection.length; q++) {
-                                if (d.city == selection[q].district) {
-                                    color = "red";
-                                    d.period = selection[q].period
-                                  } else {
-                                    continue;
-                                };
-                              };
-                              return color;
-                              })               
-                     .style("stroke", "white")
-                     .style("stroke-width", "2px")
+                     //.attr("fill", function(d) { 
+                              //var color = "green";
+                              //for (var q = 0; q < selection.length; q++) {
+                                //if (d.city == selection[q].district) {
+                                    //color = "red";
+                                    //d.period = selection[q].period
+                                  //} else {
+                                    //continue;
+                                //};
+                              //};
+                              //return color;
+                              //})               
+                     //.style("stroke", "white")
+                     //.style("stroke-width", "2px")
                 .on("mouseover", function(d) {
                   var xPos = d3.event.pageX + "px";
                   var yPos = d3.event.pageY + "px";
@@ -870,6 +716,194 @@ d3.csv("data/data.csv", function(error, data) {
                     d3.select("#main_tooltip")
                       .classed("hidden", true)
                     });
+
+
+
+
+
+
+
+
+    // Сбор данных об ограничениях на заданную дату
+function selectData(value) {
+	selection = [];
+    data.forEach(function(d) {
+	var newData = new Date(d.date);
+	newData.toDateString() == value.toDateString() ? selection.push(d) : void 0;
+			//if (newData.toDateString() == value.toDateString()) {
+					//selection.push(d);
+                //};
+	});
+    return selection;
+}
+                    
+var header = d3.select("#list")
+				.append("text");
+
+var rajony = d3.select("#list").append("g")
+            .attr("class", "rajony")
+            .attr("transform", "translate(" + 20 + ", " + 20 + ")")
+            .append("ul");
+
+function redraw_main_map(draggedDate) {
+	
+	selection = selectData(draggedDate);
+          rajonyFiltered = selection.map(function(d) { return d.district; }).sort();
+    main_map.attr("fill", function(d) {
+        if (rajonyFiltered.indexOf(d.properties.rajon) > 0) {
+            return "red";
+            d.properties.period = selection[rajonyFiltered.indexOf(d.properties.rajon)];
+        } else {
+            return "green";
+            d.properties.period = "Обычный режим продажи.";
+        };
+    });
+    main_slider_svg.select("text")
+        .text(convertDate(draggedDate))
+        .attr("x", timeScale(draggedDate) - 23);     
+        rajony.selectAll("li")
+              .remove()
+          
+        if (selection.length > 0) {
+            header.text("Продажа алкоголя ограничена в " +
+				selection.length + " районах (городах):");
+        } else {
+			header.text("По всей республике действует обычный режим продажи.");
+        };
+        rajony.selectAll("li")
+			.data(rajonyFiltered)
+            .enter()
+            .append("li")
+            .text(function(d) { return d });
+    cities.attr("fill", function(d) {
+                        var color = "green";
+                            for (var q = 0; q < selection.length; q++) {
+								if (d.city == selection[q].district) {
+									color = "red";
+                                    d.period = selection[q].period
+                                  } else {
+                                    continue;
+                                };
+                              };
+                              return color;
+						  }
+                )
+}
+
+
+    function dragListener(d) {
+          var cx = +d3.select(this).attr("cx");
+                    
+          d3.select(this)
+            .attr("cx", function(d) {
+                if (cx < 25) {
+                    return 25;
+                } else if (cx > 1175) {
+                    return 1175;
+                } else {
+                    return cx + d3.event.dx;
+                }
+            });
+      
+    var draggedDate = timeScale.invert(cx);
+          
+
+
+redraw_main_map(draggedDate)
+          
+          //map.attr("fill", function(d) {
+          //        var color = "green";
+          //        d.properties.period = "";
+          //        for (var q = 0; q < selection.length; q++) {
+          //          if (d.properties.rajon == selection[q].district) {
+          //              color = "red";
+          //              d.properties.period = selection[q].period;
+          //            } else {
+          //              continue;
+          //          };
+          //        };
+          //        return color;
+          //        })
+          //.on("mouseover", function(d) {
+                  //var xPos = d3.event.pageX + "px";
+                  //var yPos = d3.event.pageY + "px";
+                  //d3.select("#main_tooltip")
+                    //.style("left", xPos)
+                    //.style("top", yPos)
+                    //.classed("hidden", false);
+                  //d3.select("#rajon")
+                    //.text(d.properties.rajon + " район");
+                  //if (d.properties.period != "") {
+                  //d3.select("#period")
+                    //.text("Продажа ограничена с " + d.properties.period);
+                  //} else {
+                    //d3.select("#period")
+                    //.text("Обычный режим продажи.");
+                  //};
+                  //})
+                  //.on("mouseout", function(d) {
+                    //d3.select("#main_tooltip")
+                      //.classed("hidden", true)
+                    //});
+          
+          //cities.attr("fill", function(d) {
+                    //var color = "green";
+                    //d.period = "";
+                    //for (var b = 0; b < selection.length; b++) {
+                      //if (d.city == selection[b].district) {
+                          //color = "red";
+                          //d.period = selection[b].period;
+                        //} else {
+                          //continue;
+                      //};
+                    //};
+                    //return color;
+                    //})
+                //.on("mouseover", function(d) {
+                  //var xPos = d3.event.pageX + "px";
+                  //var yPos = d3.event.pageY + "px";
+                  //d3.select("#main_tooltip")
+                    //.style("left", xPos)
+                    //.style("top", yPos)
+                    //.classed("hidden", false);
+                  //d3.select("#rajon")
+                    //.text(d.city);
+                    
+                  //if (d.period != "") {
+                  //d3.select("#period")
+                    //.text("Продажа ограничена с " + d.period);
+                  //} else {
+                    //d3.select("#period")
+                    //.text("Обычный режим продажи.");
+                  //};
+                  //})
+                  //.on("mouseout", function(d) {
+                    //d3.select("#main_tooltip")
+                      //.classed("hidden", true)
+                    //});
+                    
+
+
+        }
+        
+         //var drag = d3.behavior.drag()
+                      //.on("drag", dragListener);
+                  
+          //selectData(today);
+          
+          //if (selection.length > 0) {
+            //header.text("Продажа алкоголя ограничена в " + selection.length + " районах (городах):");
+          //} else {
+            //header.text("По всей республике действует обычный режим продажи.");
+          //};
+          //rajonyFiltered = selection.map(function(d) { return d.district; }).sort();
+          //rajony.selectAll("li")
+              //.data(rajonyFiltered.sort())
+              //.enter()
+              //.append("li")
+              //.text(function(d) { return d });
+
+        redraw_main_map(today);
                 
         //circle.call(drag);
         circle.call(d3.drag()
