@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Bootstrap -->
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
 if (document.location.hostname != "localhost") {
@@ -39,7 +38,8 @@ if (document.location.hostname != "localhost") {
     console.log("You're on localhost.");
 }
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/30492712" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript><div><img src="https://mc.yandex.ru/watch/30492712"
+		style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
   </head>
 <body>
@@ -52,26 +52,43 @@ if (document.location.hostname != "localhost") {
     <div id="categories"></div>
     <section id="grafik"></section>
     <h2>Ограничения на продажу алкоголя</h2>
-    <p>Ежегодно в Беларуси отмечается множество праздников. Это День Победы, День Матери, День знаний и... еще День трезвости, который известен меньше остальных, но зато проводится несколько раз в году в разных уголках нашей республики под разными названиями.</p>
-    <p>В этот день, а также в другие подобные дни - например, выпускные вечера, Первый звонок, Последний звонок - местные власти вводят ограничения на продажу алкогольных напитков на подконтрольной им территории района или города. Ограничения касаются продажи водки, ликеро-водочных изделий, вина, коньяка, бренди, кальвадоса, шампанского и других напитков с объемной долей этилового спирта 7 и более процентов *, но не затрагивают розничную торговлю алкогольными напитками на торговых объектах общественного питания в розлив.</p>
-    <p>Эта карта позволяет всегда быть в курсе ближайшей кампании по пропаганде здорового образа жизни, помогает грамотно спланировать досуг, а также открывает интересные особенности алкогольной политики местных властей - например, в сроках, на которые вводится ограничение на продажу алкоголя.</p>
+    <p>Ежегодно в Беларуси отмечается множество праздников. Это День Победы,
+	День Матери, День знаний и... еще День трезвости (и даже Утро трезвости),
+	который известен меньше остальных, но зато проводится несколько раз в году
+	в разных уголках нашей республики под разными названиями.</p>
+    <p>В этот день, а также в другие подобные дни - например, выпускные вечера,
+	Первый звонок, Последний звонок - местные власти вводят ограничения на
+	продажу алкогольных напитков на подконтрольной им территории района или
+	города. Ограничения касаются продажи водки, ликеро-водочных изделий, вина,
+	коньяка, бренди, кальвадоса, шампанского и других напитков с объемной долей
+	этилового спирта 7 и более процентов *, но не затрагивают розничную торговлю
+	алкогольными напитками на торговых объектах общественного питания в розлив.
+	</p>
+    <p>Эта карта позволяет всегда быть в курсе ближайшей кампании по пропаганде
+	здорового образа жизни, помогает грамотно спланировать досуг, а также
+	открывает интересные особенности алкогольной политики местных властей -
+	например, в сроках, на которые вводится ограничение на продажу алкоголя.</p>
         <div id="main_slider"></div>
     <div id="main_map_items"></div>
     <div id="list"></div>
     <div id="main_map"></div>
-    <div id="preview_tooltip" class="hidden"><p id="region"></p><p id="amount"></p></div>
-    <div id="main_tooltip" class="hidden"><p id="rajon"></p><p id="period"></p></div>
-
-
+    <div id="preview_tooltip" class="hidden">
+		<p id="region"></p><p id="amount"></p>
+	</div>
+    <div id="main_tooltip" class="hidden">
+		<p id="rajon"></p><p id="period"></p>
+	</div>
   <div id= "impressum" class="text">
-      <p>Сделано в dataШколе сообщества "<a href="http://opendata.by">Открытые данные для Беларуси</a>". Расширенная испытательная версия.</p>
-      
+      <p>Сделано в dataШколе сообщества
+	  "<a href="http://opendata.by">Открытые данные для Беларуси</a>".
+	  Расширенная испытательная версия.</p>
     <p><b>Примечания:</b></p>
         <ul>
-          
-        <li>"Обычный режим продажи" алкогольных и/ или слабоалкогольных напитков и пива на территории района или города, как правило, означает запрет на их продажу в период с 21.00 до 09.00 часов. В разных местах эти сроки могут отличаться.</a></li>
+        <li>"Обычный режим продажи" алкогольных и/ или слабоалкогольных напитков
+			и пива на территории района или города, как правило, означает запрет
+			на их продажу в период с 21.00 до 09.00 часов. В разных местах эти
+			сроки могут отличаться.</a></li>
         </ul>
-      
        <p><b>Упоминания в СМИ:</b></p>
         <ul>
         <li>Как Тут Жить, <a href="http://kaktutzhit.by/news/prilozhenie-alko">http://kaktutzhit.by/news/prilozhenie-alko</a></li>
@@ -80,7 +97,6 @@ if (document.location.hostname != "localhost") {
         <li>Sputnik Беларусь, <a href="http://sputnik.by/technology/20150605/1015580135.html">http://sputnik.by/technology/20150605/1015580135.html</a></li>
         <li>Еврорадио, <a href="http://euroradio.fm/zakon-ne-zabaranyae-chamu-u-babruysku-u-dzen-cvyarozasci-gandlyuyuc-pivam">http://euroradio.fm/zakon-ne-zabaranyae-chamu-u-babruysku-u-dzen-cvyarozasci-gandlyuyuc-pivam</a></li>
         </ul>
-        
         <p><b>Прочее:</b></p>
         <ul>
           <li>Источники данных: <a href="http://belstat.gov.by">Белстат</a>, <a href="http://mvd.gov.by">МВД</a>, Национальный правовой Интернет-портал Республики Беларусь, <a href="http://pravo.by">pravo.by</a></li>
@@ -88,7 +104,6 @@ if (document.location.hostname != "localhost") {
           <li>Контакты сообщества для желающих присоединиться: <a href="http://opendata.by/about/">opendata.by/about</a></li>
           </ul>
     </div>
-   
   </article>
     </div>
   <footer>

@@ -569,7 +569,7 @@ var width = 1000,
 var today = new Date();
 var selection = [];
 var timeScale = d3.scaleTime()
-              .domain([new Date("2017-01-01"), new Date("2017-12-31")])
+              .domain([new Date("2018-01-01"), new Date("2018-12-31")])
               .rangeRound([25, 1175])
               .nice(d3.timeDay);
 // Бегунок
@@ -620,7 +620,8 @@ function convertDate(d) {
   return date + " " + months[month];
 }
 
-d3.csv("data/data.csv", function(error, data) {
+d3.csv("data/data_2018.csv", function(error, data) {
+	console.log(data)
   d3.json("data/rajony.geojson", function(json) {
         d3.csv("data/goroda.csv", function(goroda) {
 
@@ -716,6 +717,7 @@ function redraw_main_map(draggedDate) {
 	
 	selection = selectData(draggedDate);
           rajonyFiltered = selection.map(function(d) { return d.district; }).sort();
+    console.log(selection);
     main_map.attr("fill", function(d) {
         if (rajonyFiltered.indexOf(d.properties.rajon) > 0) {
             return "red";
