@@ -150,7 +150,7 @@ d3.json("data/preview_data.json", function(data) {
 				d3.select("#preview_tooltip")
 					.style("left", xPos)
 					.style("top", yPos)
-					.classed("hidden", false);  
+					//.classed("hidden", false);  
 				d3.select("#region")    
 					.text(d.properties.region_name); 
 				d3.select("#amount")
@@ -563,54 +563,51 @@ function redraw_preview_map(year, indicator) {
 }
 
 // Основная карта
-var width = 1000,
+var width = 800,
   height = 150;
 
 var today = new Date();
 var selection = [];
 var timeScale = d3.scaleTime()
               .domain([new Date("2018-01-01"), new Date("2018-12-31")])
-              .rangeRound([25, 1175])
+              .rangeRound([10, 800])
               .nice(d3.timeDay);
+
+var main_map = d3.select("#main_map")
+    .append("svg")
+    .attr("viewBox", "0 0 800 450")
+    .attr("width", width)
+    .attr("height", 560);
 // Бегунок
-var main_slider_svg = d3.select("#main_slider")
-        .append("svg")
-        .attr("viewBox", "0 0 800 150")
-        .attr("width", "100%")
-        .attr("height", height);
-  
+var main_slider_svg = main_map.append("g")
+ 						.attr("class", "main_map_slider"); 
 main_slider_svg.append("line")
-    .attr("x1", 20)
-    .attr("y1", height / 2)
-    .attr("x2", 1175)
-    .attr("y2", height / 2);
+    .attr("x1", 10)
+    .attr("y1", -30)
+    .attr("x2", 800)
+    .attr("y2", -30);
 
 
 var circle = main_slider_svg.append("circle")
             .attr("cx", timeScale(today))
-            .attr("cy", height / 2)
+            .attr("cy", -30)
             .attr("r", 10)
             .attr("fill", "#DF5757");
             
 main_slider_svg.append("text")
     .text(convertDate(today))
     .attr("x", timeScale(today) - 23)
-    .attr("y", height / 2 - 17);
+    .attr("y", -43);
 
 // Список районов и карта
 var projection = d3.geoMercator()
                     .center([27.9, 53.7])
-                    .scale(2800)
-                    .translate([330, 190]);
+                    .scale(3400)
+                    .translate([330, 250]);
 
 var path = d3.geoPath()
             .projection(projection);
 
-var svg_map = d3.select("#main_map")
-    .append("svg")
-    .attr("viewBox", "0 0 800 350")
-    .attr("width", width)
-    .attr("height", 500);
 
 function convertDate(d) {
   var months = ["января", "февраля", "марта", "апреля", "мая", "июня",
@@ -621,12 +618,13 @@ function convertDate(d) {
 }
 
 d3.csv("data/data_2018.csv", function(error, data) {
-	console.log(data)
   d3.json("data/rajony.geojson", function(json) {
         d3.csv("data/goroda.csv", function(goroda) {
 
 
-var main_map = svg_map.selectAll("path")
+var alko_map = main_map.append("g")
+			.attr("class", "alko_map")
+	alko_map.selectAll("path")
             .data(json.features)
             .enter()
 			.append("path")
@@ -653,7 +651,7 @@ var main_map = svg_map.selectAll("path")
                       .classed("hidden", true)
                     });
         
-          var cities = svg_map.selectAll("circle")
+          var cities = alko_map.selectAll("circle")
                         .data(goroda)
                         .enter()
 						.append("circle")
@@ -706,25 +704,22 @@ function selectData(value) {
 }
                     
 var header = d3.select("#list")
-				.append("text");
+				.append("p");
 
-var rajony = d3.select("#list").append("g")
+var rajony = d3.select("#list").append("ul")
             .attr("class", "rajony")
-            .attr("transform", "translate(" + 20 + ", " + 20 + ")")
-            .append("ul");
 
 function redraw_main_map(draggedDate) {
 	
 	selection = selectData(draggedDate);
           rajonyFiltered = selection.map(function(d) { return d.district; }).sort();
-    console.log(selection);
-    main_map.attr("fill", function(d) {
-        if (rajonyFiltered.indexOf(d.properties.rajon) > 0) {
+    alko_map.selectAll("path").attr("fill", function(d) {
+        if (rajonyFiltered.indexOf(d.properties.rajon) >= 0) {
+            d.properties.period = selection[rajonyFiltered.indexOf(d.properties.rajon)].period;
             return "red";
-            d.properties.period = selection[rajonyFiltered.indexOf(d.properties.rajon)];
         } else {
+            //d.properties.period = "Обычный режим продажи.";
             return "green";
-            d.properties.period = "Обычный режим продажи.";
         };
     });
     main_slider_svg.select("text")

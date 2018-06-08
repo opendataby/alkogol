@@ -118,7 +118,22 @@ tbody tr:hover {
   opacity: .8;
 }
 
-
+#main_tooltip {
+  position: absolute;
+  height: auto;
+  padding: 3px;
+  background-color: white;
+  pointer-events: none;
+  border: 1px solid black;
+}
+#main_tooltip.hidden {
+  display: none;
+}
+#main_tooltip p {
+  margin: 0;
+  font-size: 10px;
+  color: black;
+}
 
 
 /* Старый код
@@ -166,7 +181,7 @@ article, footer {
   display: block;
 }
 */
-#main_slider line {
+.main_map_slider line {
   fill: green;
   stroke: green;
   stroke-width: 2px;
@@ -178,6 +193,44 @@ article, footer {
   stroke-width: .1em;
 }
 
+#list, #main_map {
+  display: inline;
+  float: left;
+}
+
+#list {
+	overflow: auto;
+  max-height: 30em;
+  width: 15em;
+  
+}
+#list li {
+	list-style: none;
+}
+#list p {
+	font-weight: bold;
+}
+#impressum {
+  clear:both;
+}
+footer {
+  background-color: #2A2F4E;  
+}
+footer p {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 30px;
+    font-size: .8em;
+    color: white;
+    margin: 0 auto;
+}
+footer a {
+    color: white;
+    margin: 0 auto;
+}
+footer a:hover {
+	color: white;
+}
 /*
 .city {
    opacity: .9;
