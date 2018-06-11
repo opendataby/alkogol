@@ -231,7 +231,16 @@ footer a {
 footer a:hover {
 	color: white;
 }
-/*
+footer #cc {
+	padding-top: .5em;
+    padding-bottom: .5em;
+    padding-left: .5em;
+}
+#cc p {
+	display: inline;
+	padding-left: 1em;
+}
+	/*
 .city {
    opacity: .9;
 }
