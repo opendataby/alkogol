@@ -566,7 +566,7 @@ function redraw_preview_map(year, indicator) {
 var width = 800,
   height = 150;
 
-var today = new Date();
+var today = new Date("2018-01-10");
 var selection = [];
 var timeScale = d3.scaleTime()
               .domain([new Date("2018-01-01"), new Date("2018-12-31")])
